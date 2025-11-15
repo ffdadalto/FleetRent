@@ -22,6 +22,7 @@ Aplicação de referência para gestão de frotas de motocicletas com .NET 8. O 
 -   .NET 8 / ASP.NET Core Web API
 -   Entity Framework Core 8 + PostgreSQL
 -   RabbitMQ
+-   Serilog (logs estruturados)
 -   Docker & Docker Compose
 
 ## Requisitos
