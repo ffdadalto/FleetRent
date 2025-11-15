@@ -1,0 +1,49 @@
+services:
+    db:
+        image: postgres:16
+        container_name: fleetrent_postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: fleetrent_db
+            POSTGRES_USER: fleetrent
+            POSTGRES_PASSWORD: fleetrent
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    rabbit:
+        image: rabbitmq:4-management
+        container_name: fleetrent_rabbit
+        restart: unless-stopped
+        environment:
+            RABBITMQ_DEFAULT_USER: fleetrent
+            RABBITMQ_DEFAULT_PASS: fleetrent
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+
+    api:
+        build:
+            context: .
+            dockerfile: FleetRent.API/Dockerfile
+        container_name: fleetrent_api
+        restart: unless-stopped
+        depends_on:
+            - db
+            - rabbit
+        environment:
+            ASPNETCORE_ENVIRONMENT: Development
+            ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=fleetrent_db;Username=fleetrent;Password=fleetrent"
+            RabbitMq__HostName: "rabbit"
+            RabbitMq__UserName: "fleetrent"
+            RabbitMq__Password: "fleetrent"
+            RabbitMq__Exchange: "fleetrent.exchange"
+        ports:
+            - "8080:8080"
+        volumes:
+            - cnh_uploads:/app/wwwroot/uploads
+
+volumes:
+    postgres_data:
+    cnh_uploads:
