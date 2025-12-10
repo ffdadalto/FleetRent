@@ -94,7 +94,7 @@ FleetRent.Tests/            # Projeto de testes automatizados (xUnit)
 
 A documentação técnica completa do sistema está disponível na pasta `Documentação`, no arquivo `Documentação Ténica.pdf`.
 
-## Observações de desenvolvimento
+## Observações de desenvolvimento a serem corrigidas
 
 ### Bikes
 
